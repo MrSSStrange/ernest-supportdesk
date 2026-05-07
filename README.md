@@ -28,3 +28,6 @@
 ```bash
 npm install
 npm run dev
+
+Demo: https://mrssstrange.github.io/ernest-supportdesk/
+Code: https://github.com/MrSSStrange/ernest-supportdesk
