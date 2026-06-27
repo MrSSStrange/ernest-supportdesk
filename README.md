@@ -1,33 +1,28 @@
 # Ernest SupportDesk
 
-Мини-приложение на React + TypeScript для обработки клиентских обращений.
+React support desk app for managing client requests, ticket statuses and internal workflow.
 
-## Возможности
+## Demo
 
-- создание обращения;
-- список обращений;
-- поиск по клинике, теме и описанию;
-- фильтр по статусу;
-- смена статуса обращения;
-- удаление обращения;
-- статистика по статусам;
-- детальная страница обращения;
-- сохранение данных в localStorage.
+https://mrssstrange.github.io/ernest-supportdesk/
 
-## Стек
+## Tech Stack
 
 - React
 - TypeScript
-- React Router
 - Vite
 - CSS
-- localStorage
 
-## Запуск проекта
+## Features
+
+- Client request cards
+- Request status management
+- Internal support workflow
+- Responsive interface
+- Clean frontend structure
+
+## How to Run
 
 ```bash
 npm install
 npm run dev
-
-Demo: https://mrssstrange.github.io/ernest-supportdesk/
-Code: https://github.com/MrSSStrange/ernest-supportdesk
