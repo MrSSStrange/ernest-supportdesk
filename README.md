@@ -66,7 +66,7 @@ src
 
 ## 👤 Author
 
-Ernest Muzafarov
+**Ernest Muzafarov**  
 Frontend Developer
 
-[GitHub](https://github.com/MrSSStrange) · [LinkedIn](https://www.linkedin.com/in/ernest-muzafarov-919a323a2/) · [Telegram](https://t.me/mrssstrange)
+[GitHub](https://github.com/MrSSStrange) · [LinkedIn](https://www.linkedin.com/in/ernest-muzafarov-919a323a2/)
