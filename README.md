@@ -1,61 +1,64 @@
-# Ernest SupportDesk Mini
+# Ernest SupportDesk
 
-React support desk app for managing client requests, ticket statuses and internal workflow.
+Support desk interface for managing clinic support tickets, priorities, statuses, filters and internal workflow queues.
 
-## 🚀 Demo
+## Live Demo
 
 [Open Live Demo](https://mrssstrange.github.io/ernest-supportdesk/)
 
-## 📸 Screenshots
+## Screenshots
 
 ### Main Dashboard
 
-<img src="./assets/supportdesk-preview.png" />
+<img src="./assets/supportdesk-preview.png" alt="Ernest SupportDesk dashboard" />
 
 ### Status Filter
 
-<img src="./assets/supportdesk-status-filter.png" />
+<img src="./assets/supportdesk-status-filter.png" alt="SupportDesk status filter" />
 
 ### Priority Select
 
-<img src="./assets/supportdesk-priority-select.png" />
+<img src="./assets/supportdesk-priority-select.png" alt="SupportDesk priority select" />
 
-## 🧰 Tech Stack
+## Problem
 
-* React
-* TypeScript
-* Vite
-* CSS
+Support teams need a clear queue where clinic requests can be filtered by priority, status and workflow context. A support interface should make urgent tickets visible, keep status updates fast and reduce unnecessary searching during the workday.
 
-## ✨ Features
+## Solution
 
-* Create client support requests
-* Manage request statuses
-* Filter requests by status
-* Search by clinic, topic or description
-* Set request priority
-* Delete requests
-* View request statistics
-* Responsive dashboard layout
+Ernest SupportDesk is a frontend project focused on support queue logic. It provides ticket cards, priority labels, status updates, filters, local persistence and a dashboard-style layout for internal support workflows.
 
-## 📌 Project Idea
+## Features
 
-This project is based on a real support workflow.
+- Create clinic support tickets
+- Manage request statuses
+- Filter requests by status and priority
+- Search by clinic, topic or description
+- Set ticket priority
+- Delete requests
+- View request statistics
+- Persist data in `localStorage`
+- Responsive dashboard layout
 
-The interface is designed for processing client requests from clinics: payment issues, lab result problems, email errors and other support cases.
+## Tech Stack
 
-The goal of the project is to practice React, TypeScript, component structure, state management and clean UI development.
+- React
+- TypeScript
+- Vite
+- CSS
+- LocalStorage
+- GitHub Pages
 
-## ▶️ How to Run
+## How to Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-## 📁 Project Structure
+## Project Structure
 
-```txt
+```text
 src
 ├── components
 ├── data
@@ -64,7 +67,24 @@ src
 └── main.tsx
 ```
 
-## 👤 Author
+## What I Learned
+
+- Structuring a React interface around business workflow logic
+- Modeling ticket status, priority and filtering state in TypeScript
+- Building reusable UI components for an internal tool layout
+- Persisting frontend state without a backend prototype
+
+## Next Improvements
+
+- Mock API
+- Ticket details page
+- Comments
+- SLA indicator
+- Assignee field
+- Clinic card
+- Pagination
+
+## Author
 
 **Ernest Muzafarov**  
 Frontend Developer
