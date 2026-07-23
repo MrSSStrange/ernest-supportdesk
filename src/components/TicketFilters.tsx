@@ -15,14 +15,20 @@ export function TicketFilters({
 }: TicketFiltersProps) {
   return (
     <div className="toolbar">
-      <input
-        value={search}
-        onChange={(event) => onSearchChange(event.target.value)}
-        placeholder="Поиск по клинике, теме или описанию"
-      />
+      <label className="ticketSearch">
+        <span aria-hidden="true">⌕</span>
+        <span className="visuallyHidden">Поиск обращений</span>
+        <input
+          value={search}
+          onChange={(event) => onSearchChange(event.target.value)}
+          placeholder="Номер, организация или текст обращения"
+        />
+      </label>
 
       <select
+        className="mobileStatusFilter"
         value={statusFilter}
+        aria-label="Фильтр по статусу"
         onChange={(event) =>
           onStatusFilterChange(event.target.value as TicketStatus | 'all')
         }
@@ -30,9 +36,13 @@ export function TicketFilters({
         <option value="all">Все статусы</option>
         <option value="new">Новое</option>
         <option value="in_progress">В работе</option>
-        <option value="waiting_client">Ожидает клиента</option>
+        <option value="waiting_client">Ждём клиента</option>
         <option value="resolved">Решено</option>
       </select>
+
+      <button className="filterButton" type="button">
+        Фильтры <span>0</span>
+      </button>
     </div>
   );
 }

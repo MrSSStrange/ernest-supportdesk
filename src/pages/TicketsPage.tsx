@@ -1,3 +1,4 @@
+import { SupportSidebar } from '../components/SupportSidebar';
 import { TicketCard } from '../components/TicketCard';
 import { TicketFilters } from '../components/TicketFilters';
 import { TicketForm } from '../components/TicketForm';
@@ -27,8 +28,9 @@ type TicketsPageProps = {
   onStatusFilterChange: (value: TicketStatus | 'all') => void;
 };
 
+const queueFilters = ['all', 'new', 'in_progress', 'waiting_client', 'resolved'] as const;
+
 export function TicketsPage({
-  tickets,
   filteredTickets,
   ticketStats,
   search,
@@ -40,75 +42,102 @@ export function TicketsPage({
   onStatusFilterChange,
 }: TicketsPageProps) {
   return (
-    <>
-      <section className="hero">
-        <div>
-          <h1>Ernest SupportDesk Mini</h1>
-          <p className="heroText">
-            Портфолио-проект на React для обработки клиентских обращений.
-          </p>
-        </div>
+    <div className="deskShell">
+      <SupportSidebar
+        newCount={ticketStats.new}
+        inProgressCount={ticketStats.in_progress}
+      />
 
-        <div className="stats">
-          <span>{tickets.length}</span>
-          <p>обращений всего</p>
+      <section className="deskMain">
+        <header className="deskHeader">
+          <div>
+            <p className="breadcrumbs">Поддержка / Очередь</p>
+            <h1>Входящие обращения</h1>
+            <p className="deskSubtitle">
+              Четверг, 23 июля · дежурная смена 09:00–18:00
+            </p>
+          </div>
+          <span className="connectionState">
+            <i aria-hidden="true" /> Система работает
+          </span>
+        </header>
+
+        <nav className="queueTabs" aria-label="Фильтр по статусу">
+          {queueFilters.map((status) => (
+            <button
+              className={statusFilter === status ? 'isActive' : ''}
+              key={status}
+              type="button"
+              onClick={() => onStatusFilterChange(status)}
+            >
+              {status === 'all' ? 'Все' : statusLabels[status]}
+              <span>{ticketStats[status]}</span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="queueLayout">
+          <section className="queuePanel">
+            <TicketFilters
+              search={search}
+              statusFilter={statusFilter}
+              onSearchChange={onSearchChange}
+              onStatusFilterChange={onStatusFilterChange}
+            />
+
+            <div className="queueMeta">
+              <span>
+                Найдено: <strong>{filteredTickets.length}</strong>
+              </span>
+              <span>Сначала срочные</span>
+            </div>
+
+            <div className="ticketList">
+              {filteredTickets.length === 0 ? (
+                <div className="empty">
+                  <strong>В этой очереди пусто</strong>
+                  <span>Измените фильтр или поисковый запрос.</span>
+                </div>
+              ) : (
+                filteredTickets.map((ticket) => (
+                  <TicketCard
+                    key={ticket.id}
+                    ticket={ticket}
+                    onChangeStatus={onChangeStatus}
+                    onDelete={onDelete}
+                  />
+                ))
+              )}
+            </div>
+          </section>
+
+          <aside className="queueAside">
+            <TicketForm onCreateTicket={onCreateTicket} />
+
+            <section className="shiftCard">
+              <div className="shiftCardHeading">
+                <span>Смена сегодня</span>
+                <strong>до 18:00</strong>
+              </div>
+              <dl>
+                <div>
+                  <dt>В очереди</dt>
+                  <dd>{ticketStats.new + ticketStats.in_progress}</dd>
+                </div>
+                <div>
+                  <dt>Ждём клиента</dt>
+                  <dd>{ticketStats.waiting_client}</dd>
+                </div>
+                <div>
+                  <dt>Закрыто</dt>
+                  <dd>{ticketStats.resolved}</dd>
+                </div>
+              </dl>
+              <p>Следующая передача смены — в 17:45.</p>
+            </section>
+          </aside>
         </div>
       </section>
-
-      <section className="layout">
-        <TicketForm onCreateTicket={onCreateTicket} />
-
-        <section className="tickets">
-          <div className="statGrid">
-            <div className="statCard">
-              <span>{ticketStats.all}</span>
-              <p>Всего</p>
-            </div>
-
-            <div className="statCard">
-              <span>{ticketStats.new}</span>
-              <p>{statusLabels.new}</p>
-            </div>
-
-            <div className="statCard">
-              <span>{ticketStats.in_progress}</span>
-              <p>{statusLabels.in_progress}</p>
-            </div>
-
-            <div className="statCard">
-              <span>{ticketStats.waiting_client}</span>
-              <p>{statusLabels.waiting_client}</p>
-            </div>
-
-            <div className="statCard">
-              <span>{ticketStats.resolved}</span>
-              <p>{statusLabels.resolved}</p>
-            </div>
-          </div>
-
-          <TicketFilters
-            search={search}
-            statusFilter={statusFilter}
-            onSearchChange={onSearchChange}
-            onStatusFilterChange={onStatusFilterChange}
-          />
-
-          <div className="ticketList">
-            {filteredTickets.length === 0 ? (
-              <div className="empty">Обращения не найдены</div>
-            ) : (
-              filteredTickets.map((ticket) => (
-                <TicketCard
-                  key={ticket.id}
-                  ticket={ticket}
-                  onChangeStatus={onChangeStatus}
-                  onDelete={onDelete}
-                />
-              ))
-            )}
-          </div>
-        </section>
-      </section>
-    </>
+    </div>
   );
 }

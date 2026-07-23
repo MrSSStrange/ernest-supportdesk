@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { priorityLabels, statusLabels } from '../constants/ticket';
+import { priorityLabels } from '../constants/ticket';
 import type { Ticket, TicketStatus } from '../types/ticket';
 
 type TicketCardProps = {
@@ -13,46 +13,79 @@ export function TicketCard({
   onChangeStatus,
   onDelete,
 }: TicketCardProps) {
-  return (
-    <article className="card ticket">
-      <div className="ticketHeader">
-        <div>
-          <h3>{ticket.title}</h3>
-          <p>{ticket.clinicName}</p>
-        </div>
+  const shortId = ticket.id.startsWith('SD-')
+    ? ticket.id
+    : `SD-${ticket.id.slice(0, 4).toUpperCase()}`;
 
-        <span className={`priority ${ticket.priority}`}>
-          {priorityLabels[ticket.priority]}
+  function handleDelete() {
+    if (window.confirm(`Удалить обращение ${shortId}?`)) {
+      onDelete(ticket.id);
+    }
+  }
+
+  return (
+    <article className={`ticket priority-${ticket.priority}`}>
+      <div className="ticketLead">
+        <span className={`priorityMark ${ticket.priority}`} aria-hidden="true" />
+        <div>
+          <div className="ticketIdentity">
+            <span>{shortId}</span>
+            <span>{ticket.channel}</span>
+            <span>{ticket.createdAt}</span>
+          </div>
+          <Link className="ticketTitle" to={`/tickets/${ticket.id}`}>
+            {ticket.title}
+          </Link>
+          <p className="ticketClinic">{ticket.clinicName}</p>
+          <p className="description">{ticket.description}</p>
+        </div>
+      </div>
+
+      <div className="ticketOwner">
+        <span className="ownerAvatar">
+          {ticket.assignee === 'Не назначен'
+            ? '—'
+            : ticket.assignee
+                .split(' ')
+                .map((part) => part[0])
+                .join('')
+                .slice(0, 2)}
+        </span>
+        <span>
+          <small>Исполнитель</small>
+          <strong>{ticket.assignee}</strong>
         </span>
       </div>
 
-      <p className="description">{ticket.description}</p>
+      <div className="ticketSla">
+        <small>SLA</small>
+        <strong>{ticket.sla}</strong>
+        <span>{priorityLabels[ticket.priority]}</span>
+      </div>
 
-      <div className="ticketFooter">
+      <div className="ticketActions">
         <select
+          className={`statusControl ${ticket.status}`}
           value={ticket.status}
+          aria-label={`Статус обращения ${shortId}`}
           onChange={(event) =>
             onChangeStatus(ticket.id, event.target.value as TicketStatus)
           }
         >
           <option value="new">Новое</option>
           <option value="in_progress">В работе</option>
-          <option value="waiting_client">Ожидает клиента</option>
+          <option value="waiting_client">Ждём клиента</option>
           <option value="resolved">Решено</option>
         </select>
-
-        <span className="status">{statusLabels[ticket.status]}</span>
-
-        <Link className="detailsButton" to={`/tickets/${ticket.id}`}>
-          Подробнее
-        </Link>
 
         <button
           className="deleteButton"
           type="button"
-          onClick={() => onDelete(ticket.id)}
+          aria-label={`Удалить обращение ${shortId}`}
+          title="Удалить"
+          onClick={handleDelete}
         >
-          Удалить
+          ×
         </button>
       </div>
     </article>

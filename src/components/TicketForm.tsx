@@ -19,9 +19,9 @@ export function TicketForm({ onCreateTicket }: TicketFormProps) {
     }
 
     onCreateTicket({
-      clinicName,
-      title,
-      description,
+      clinicName: clinicName.trim(),
+      title: title.trim(),
+      description: description.trim(),
       priority,
     });
 
@@ -32,34 +32,43 @@ export function TicketForm({ onCreateTicket }: TicketFormProps) {
   }
 
   return (
-    <form className="card form" onSubmit={handleSubmit}>
-      <h2>Новое обращение</h2>
+    <form className="ticketForm" onSubmit={handleSubmit}>
+      <div className="ticketFormHeading">
+        <div>
+          <p>Быстрое создание</p>
+          <h2>Новое обращение</h2>
+        </div>
+        <span>⌘ K</span>
+      </div>
 
       <label>
-        Клиника
+        Организация
         <input
           value={clinicName}
           onChange={(event) => setClinicName(event.target.value)}
-          placeholder="Например: Клиника Здоровье"
+          placeholder="Название клиники"
+          required
         />
       </label>
 
       <label>
-        Тема
+        Коротко о проблеме
         <input
           value={title}
           onChange={(event) => setTitle(event.target.value)}
-          placeholder="Например: Не печатается чек"
+          placeholder="Например, касса не отвечает"
+          required
         />
       </label>
 
       <label>
-        Описание
+        Что произошло
         <textarea
           value={description}
           onChange={(event) => setDescription(event.target.value)}
-          placeholder="Опиши проблему клиента"
-          rows={5}
+          placeholder="Опишите симптомы и что уже проверили"
+          rows={4}
+          required
         />
       </label>
 
@@ -79,6 +88,7 @@ export function TicketForm({ onCreateTicket }: TicketFormProps) {
       </label>
 
       <button type="submit">Создать обращение</button>
+      <small>Источник будет указан как «Вручную»</small>
     </form>
   );
 }
