@@ -27,6 +27,12 @@ export function TicketDetailsPage({ tickets }: TicketDetailsPageProps) {
     );
   }
 
+  const assigneeInitials = ticket.assignee
+    .split(' ')
+    .map((part) => part.replace('.', '')[0])
+    .join('')
+    .slice(0, 2);
+
   return (
     <div className="deskShell">
       <SupportSidebar />
@@ -69,7 +75,7 @@ export function TicketDetailsPage({ tickets }: TicketDetailsPageProps) {
               </div>
               {ticket.assignee !== 'Не назначен' && (
                 <div className="timelineItem">
-                  <span className="timelineAvatar person">ЭМ</span>
+                  <span className="timelineAvatar person">{assigneeInitials}</span>
                   <div>
                     <p><strong>{ticket.assignee}</strong> взял обращение в работу</p>
                     <small>сегодня, 09:36</small>

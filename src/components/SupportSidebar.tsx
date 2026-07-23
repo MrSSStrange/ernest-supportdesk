@@ -43,9 +43,9 @@ export function SupportSidebar({
       </nav>
 
       <div className="supportUser">
-        <span className="supportUserAvatar">ЕМ</span>
+        <span className="supportUserAvatar">1Л</span>
         <span>
-          <strong>Эрнест Музафаров</strong>
+          <strong>Дежурный оператор</strong>
           <small>1-я линия · онлайн</small>
         </span>
         <button type="button" aria-label="Настройки профиля">···</button>

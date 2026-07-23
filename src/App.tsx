@@ -33,7 +33,9 @@ function App() {
         status: ticket.status ?? 'new',
         priority: ticket.priority ?? 'medium',
         createdAt: ticket.createdAt ?? 'дата не указана',
-        assignee: ticket.assignee ?? 'Не назначен',
+        assignee: ticket.assignee?.startsWith('Э.')
+          ? 'И. Соколов'
+          : (ticket.assignee ?? 'Не назначен'),
         channel: ticket.channel ?? 'Вручную',
         sla: ticket.sla ?? '4 ч',
       }));
