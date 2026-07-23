@@ -14,6 +14,9 @@ export type Ticket = {
   status: TicketStatus;
   priority: TicketPriority;
   createdAt: string;
+  assignee: string;
+  channel: 'Почта' | 'Телефон' | 'Вручную';
+  sla: string;
 };
 
 export type NewTicketFormData = {

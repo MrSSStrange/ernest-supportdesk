@@ -22,7 +22,21 @@ function App() {
     }
 
     try {
-      return JSON.parse(savedTickets) as Ticket[];
+      const parsedTickets = JSON.parse(savedTickets) as Partial<Ticket>[];
+
+      return parsedTickets.map((ticket, index) => ({
+        ...ticket,
+        id: ticket.id ?? `SD-${2400 + index}`,
+        clinicName: ticket.clinicName ?? 'Организация не указана',
+        title: ticket.title ?? 'Без темы',
+        description: ticket.description ?? 'Описание отсутствует',
+        status: ticket.status ?? 'new',
+        priority: ticket.priority ?? 'medium',
+        createdAt: ticket.createdAt ?? 'дата не указана',
+        assignee: ticket.assignee ?? 'Не назначен',
+        channel: ticket.channel ?? 'Вручную',
+        sla: ticket.sla ?? '4 ч',
+      }));
     } catch {
       return initialTickets;
     }
@@ -66,13 +80,19 @@ function App() {
 
   function createTicket(ticketData: NewTicketFormData) {
     const newTicket: Ticket = {
-      id: crypto.randomUUID(),
+      id: `SD-${Math.floor(2500 + Math.random() * 7000)}`,
       clinicName: ticketData.clinicName,
       title: ticketData.title,
       description: ticketData.description,
       status: 'new',
       priority: ticketData.priority,
-      createdAt: new Date().toLocaleDateString('ru-RU'),
+      createdAt: `сегодня, ${new Date().toLocaleTimeString('ru-RU', {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`,
+      assignee: 'Не назначен',
+      channel: 'Вручную',
+      sla: ticketData.priority === 'critical' ? '30 мин' : '4 ч',
     };
 
     setTickets((currentTickets) => [newTicket, ...currentTickets]);
